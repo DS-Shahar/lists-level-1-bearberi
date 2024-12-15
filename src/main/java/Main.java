@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class ListOperations {
 
-    public static List<Integer> arrayToList(int[] arr) {
+    public static List<Integer> convertArrayToList(int[] arr) {
         List<Integer> result = new ArrayList<>();
         for (int i = 0; i < arr.length; i++) {
             result.add(arr[i]);
@@ -18,18 +18,18 @@ public class ListOperations {
         }
     }
 
-    public static void printListReverse(List<Integer> list) {
-        printListReverseHelper(list, list.size() - 1);
+    public static void printListInReverse(List<Integer> list) {
+        printListInReverseHelper(list, list.size() - 1);
     }
 
-    private static void printListReverseHelper(List<Integer> list, int index) {
+    private static void printListInReverseHelper(List<Integer> list, int index) {
         if (index >= 0) {
             System.out.println(list.get(index));
-            printListReverseHelper(list, index - 1);
+            printListInReverseHelper(list, index - 1);
         }
     }
 
-    public static List<Integer> getInputList() {
+    public static List<Integer> getNumbersFromUser() {
         List<Integer> list = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         int num;
@@ -49,7 +49,7 @@ public class ListOperations {
         }
     }
 
-    public static boolean containsNumber(List<Integer> list, int num) {
+    public static boolean isNumberInList(List<Integer> list, int num) {
         return list.contains(num);
     }
 
@@ -65,33 +65,51 @@ public class ListOperations {
         return list;
     }
 
-    public static boolean containsAll(List<Integer> L1, List<Integer> L2) {
-        return containsAllHelper(L1, L2, 0);
+    public static boolean areAllElementsInList(List<Integer> L1, List<Integer> L2) {
+        return areAllElementsInListHelper(L1, L2, 0);
     }
 
-    private static boolean containsAllHelper(List<Integer> L1, List<Integer> L2, int index) {
+    private static boolean areAllElementsInListHelper(List<Integer> L1, List<Integer> L2, int index) {
         if (index == L1.size()) {
             return true;
         }
         if (!L2.contains(L1.get(index))) {
             return false;
         }
-        return containsAllHelper(L1, L2, index + 1);
+        return areAllElementsInListHelper(L1, L2, index + 1);
+    }
+
+    public static void printCommonElements(List<Integer> L1, List<Integer> L2) {
+        for (int i = 0; i < L1.size(); i++) {
+            if (L2.contains(L1.get(i))) {
+                System.out.println(L1.get(i));
+            }
+        }
+    }
+
+    public static List<Integer> getCommonElements(List<Integer> L1, List<Integer> L2) {
+        List<Integer> commonList = new ArrayList<>();
+        for (int i = 0; i < L1.size(); i++) {
+            if (L2.contains(L1.get(i))) {
+                commonList.add(L1.get(i));
+            }
+        }
+        return commonList;
     }
 
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5};
-        List<Integer> list = arrayToList(arr);
+        List<Integer> list = convertArrayToList(arr);
 
         printList(list);
-        printListReverse(list);
+        printListInReverse(list);
 
-        List<Integer> inputList = getInputList();
+        List<Integer> inputList = getNumbersFromUser();
         printList(inputList);
 
         printEvenNumbers(list);
 
-        System.out.println(containsNumber(list, 3));
+        System.out.println(isNumberInList(list, 3));
 
         List<Integer> newList = removeFirstOccurrence(list, 3);
         printList(newList);
@@ -111,6 +129,11 @@ public class ListOperations {
         L2.add(4);
         L2.add(5);
 
-        System.out.println(containsAll(L1, L2));
+        System.out.println(areAllElementsInList(L1, L2));
+
+        printCommonElements(L1, L2);
+
+        List<Integer> commonValues = getCommonElements(L1, L2);
+        printList(commonValues);
     }
 }
